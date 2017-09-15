@@ -12,6 +12,8 @@ docs-site/style.css
 *.iml
 .idea
 
+!src
+
 docs/calendar.md
 docs/date_input.md
 docs/day.md
