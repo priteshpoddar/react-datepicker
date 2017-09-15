@@ -2,17 +2,32 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-function generateYears (year, noOfYear) {
-  var list = []
-  for (var i = 0; i < (2 * noOfYear + 1); i++) {
-    list.push(year + noOfYear - i)
+function generateYears (year, noOfYear, maximumYear) {
+  var list = [];
+  //If maxDate is defined then that is upperlimit for date
+  if(maximumYear) {
+    if (maximumYear - year > noOfYear) {
+      for (var i = 0; i < (2 * noOfYear + 1); i++) {
+          list.push(year + noOfYear - i)
+      }
+    } else {
+      for (var i = 0; i < (2 * noOfYear + 1); i++) {
+          list.push(maximumYear - i);
+      }
+    }
+  } else {
+    for (var i = 0; i < (2 * noOfYear + 1); i++) {
+      list.push(year + noOfYear - i)
+    }
   }
+  
   return list
 }
 
 export default class YearDropdownOptions extends React.Component {
   static propTypes = {
     onCancel: PropTypes.func.isRequired,
+    maxDate: PropTypes.object,
     onChange: PropTypes.func.isRequired,
     scrollableYearDropdown: PropTypes.bool,
     year: PropTypes.number.isRequired,
@@ -25,7 +40,7 @@ export default class YearDropdownOptions extends React.Component {
     const noOfYear = yearDropdownItemNumber || (scrollableYearDropdown ? 10 : 5)
 
     this.state = {
-      yearsList: generateYears(this.props.year, noOfYear)
+      yearsList: generateYears(this.props.year, noOfYear, this.props.maxDate.year())
     }
   }
 
@@ -79,6 +94,10 @@ export default class YearDropdownOptions extends React.Component {
   }
 
   incrementYears = () => {
+    //Check for maxDate
+    if(this.props.maxDate.year() <= this.state.yearsList[0])
+      return;
+
     return this.shiftYears(1)
   }
 
