@@ -650,45 +650,43 @@
 	var warning = emptyFunction;
 
 	if (false) {
-	  (function () {
-	    var printWarning = function printWarning(format) {
-	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	        args[_key - 1] = arguments[_key];
+	  var printWarning = function printWarning(format) {
+	    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	      args[_key - 1] = arguments[_key];
+	    }
+
+	    var argIndex = 0;
+	    var message = 'Warning: ' + format.replace(/%s/g, function () {
+	      return args[argIndex++];
+	    });
+	    if (typeof console !== 'undefined') {
+	      console.error(message);
+	    }
+	    try {
+	      // --- Welcome to debugging React ---
+	      // This error was thrown as a convenience so that you can use this stack
+	      // to find the callsite that caused this warning to fire.
+	      throw new Error(message);
+	    } catch (x) {}
+	  };
+
+	  warning = function warning(condition, format) {
+	    if (format === undefined) {
+	      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	    }
+
+	    if (format.indexOf('Failed Composite propType: ') === 0) {
+	      return; // Ignore CompositeComponent proptype check.
+	    }
+
+	    if (!condition) {
+	      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+	        args[_key2 - 2] = arguments[_key2];
 	      }
 
-	      var argIndex = 0;
-	      var message = 'Warning: ' + format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      });
-	      if (typeof console !== 'undefined') {
-	        console.error(message);
-	      }
-	      try {
-	        // --- Welcome to debugging React ---
-	        // This error was thrown as a convenience so that you can use this stack
-	        // to find the callsite that caused this warning to fire.
-	        throw new Error(message);
-	      } catch (x) {}
-	    };
-
-	    warning = function warning(condition, format) {
-	      if (format === undefined) {
-	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	      }
-
-	      if (format.indexOf('Failed Composite propType: ') === 0) {
-	        return; // Ignore CompositeComponent proptype check.
-	      }
-
-	      if (!condition) {
-	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-	          args[_key2 - 2] = arguments[_key2];
-	        }
-
-	        printWarning.apply(undefined, [format].concat(args));
-	      }
-	    };
-	  })();
+	      printWarning.apply(undefined, [format].concat(args));
+	    }
+	  };
 	}
 
 	module.exports = warning;
@@ -1116,7 +1114,7 @@
 
 /***/ }),
 /* 15 */
-[538, 6],
+[539, 6],
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5936,7 +5934,7 @@
 
 /***/ }),
 /* 50 */
-[538, 35],
+[539, 35],
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17417,18 +17415,11 @@
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
 	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 * http://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
 	 * @typechecks
 	 */
@@ -20468,7 +20459,7 @@
 
 	var _example_components2 = _interopRequireDefault(_example_components);
 
-	var _hero_example = __webpack_require__(537);
+	var _hero_example = __webpack_require__(538);
 
 	var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -20779,9 +20770,13 @@
 
 	var _exclude_time_period2 = _interopRequireDefault(_exclude_time_period);
 
-	__webpack_require__(535);
+	var _dont_close_onSelect = __webpack_require__(535);
+
+	var _dont_close_onSelect2 = _interopRequireDefault(_dont_close_onSelect);
 
 	__webpack_require__(536);
+
+	__webpack_require__(537);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20808,6 +20803,15 @@
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = exampleComponents.__proto__ || Object.getPrototypeOf(exampleComponents)).call.apply(_ref, [this].concat(args))), _this), _this.examples = [{
 	      title: 'Default',
 	      component: _react2.default.createElement(_default2.default, null)
+	    }, {
+	      title: 'Select Time',
+	      component: _react2.default.createElement(_show_time2.default, null)
+	    }, {
+	      title: 'Exclude Times',
+	      component: _react2.default.createElement(_exclude_times2.default, null)
+	    }, {
+	      title: 'Specific Time Range',
+	      component: _react2.default.createElement(_exclude_time_period2.default, null)
 	    }, {
 	      title: 'Custom date format',
 	      component: _react2.default.createElement(_custom_date_format2.default, null)
@@ -20914,14 +20918,8 @@
 	      title: 'Get raw input value on change',
 	      component: _react2.default.createElement(_raw_change2.default, null)
 	    }, {
-	      title: 'Select Time',
-	      component: _react2.default.createElement(_show_time2.default, null)
-	    }, {
-	      title: 'Exclude Times',
-	      component: _react2.default.createElement(_exclude_times2.default, null)
-	    }, {
-	      title: 'Specific Time Range',
-	      component: _react2.default.createElement(_exclude_time_period2.default, null)
+	      title: 'Don\'t hide calendar on date selection',
+	      component: _react2.default.createElement(_dont_close_onSelect2.default, null)
 	    }], _this.renderExamples = function () {
 	      return _this.examples.map(function (example, index) {
 	        return _react2.default.createElement(
@@ -38673,7 +38671,8 @@
 	    key: 'defaultProps',
 	    get: function get() {
 	      return {
-	        dateFormat: 'LLL',
+	        allowSameDay: false,
+	        dateFormat: 'L',
 	        dateFormatCalendar: 'MMMM YYYY',
 	        onChange: function onChange() {},
 
@@ -38690,6 +38689,7 @@
 	        utcOffset: (0, _moment2.default)().utcOffset(),
 	        monthsShown: 1,
 	        withPortal: false,
+	        shouldCloseOnSelect: true,
 	        showTimeSelect: false,
 	        timeIntervals: 30
 	      };
@@ -38701,8 +38701,12 @@
 
 	    var _this = _possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
 
+	    _this.getPreSelection = function () {
+	      return _this.props.openToDate ? (0, _moment2.default)(_this.props.openToDate) : _this.props.selectsEnd && _this.props.startDate ? (0, _moment2.default)(_this.props.startDate) : _this.props.selectsStart && _this.props.endDate ? (0, _moment2.default)(_this.props.endDate) : typeof _this.props.utcOffset !== 'undefined' ? _moment2.default.utc().utcOffset(_this.props.utcOffset) : (0, _moment2.default)();
+	    };
+
 	    _this.calcInitialState = function () {
-	      var defaultPreSelection = _this.props.openToDate ? (0, _moment2.default)(_this.props.openToDate) : _this.props.selectsEnd && _this.props.startDate ? (0, _moment2.default)(_this.props.startDate) : _this.props.selectsStart && _this.props.endDate ? (0, _moment2.default)(_this.props.endDate) : typeof _this.props.utcOffset !== 'undefined' ? _moment2.default.utc().utcOffset(_this.props.utcOffset) : (0, _moment2.default)();
+	      var defaultPreSelection = _this.getPreSelection();
 	      var minDate = (0, _date_utils.getEffectiveMinDate)(_this.props);
 	      var maxDate = (0, _date_utils.getEffectiveMaxDate)(_this.props);
 	      var boundedPreSelection = minDate && defaultPreSelection.isBefore(minDate) ? minDate : maxDate && defaultPreSelection.isAfter(maxDate) ? maxDate : defaultPreSelection;
@@ -38801,7 +38805,6 @@
 	      } else if (!_this.props.inline) {
 	        _this.setOpen(false);
 	      }
-	      if (!_this.props.showTimeSelect) _this.setOpen(false);
 	    };
 
 	    _this.setSelected = function (date, event, keepInput) {
@@ -38845,7 +38848,7 @@
 	    };
 
 	    _this.handleTimeChange = function (time) {
-	      var selected = _this.props.selected ? _this.props.selected : (0, _moment2.default)();
+	      var selected = _this.props.selected ? _this.props.selected : _this.getPreSelection();
 	      var changedDate = selected.clone().set({
 	        hour: time.get('hours'),
 	        minute: time.get('minutes')
@@ -38979,13 +38982,15 @@
 	          monthsShown: _this.props.monthsShown,
 	          onDropdownFocus: _this.handleDropdownFocus,
 	          onMonthChange: _this.props.onMonthChange,
+	          dayClassName: _this.props.dayClassName,
 	          showTimeSelect: _this.props.showTimeSelect,
 	          onTimeChange: _this.handleTimeChange,
 	          timeIntervals: _this.props.timeIntervals,
 	          minTime: _this.props.minTime,
 	          maxTime: _this.props.maxTime,
 	          excludeTimes: _this.props.excludeTimes,
-	          className: _this.props.calendarClassName },
+	          className: _this.props.calendarClassName,
+	          yearDropdownItemNumber: _this.props.yearDropdownItemNumber },
 	        _this.props.children
 	      );
 	    };
@@ -39153,7 +39158,10 @@
 	  useWeekdaysShort: _propTypes2.default.bool,
 	  utcOffset: _propTypes2.default.number,
 	  value: _propTypes2.default.string,
+	  weekLabel: _propTypes2.default.string,
 	  withPortal: _propTypes2.default.bool,
+	  yearDropdownItemNumber: _propTypes2.default.number,
+	  shouldCloseOnSelect: _propTypes2.default.bool,
 	  showTimeSelect: _propTypes2.default.bool,
 	  timeIntervals: _propTypes2.default.number,
 	  minTime: _propTypes2.default.object,
@@ -39452,7 +39460,9 @@
 	        var monthKey = 'month-' + i;
 	        monthList.push(_react2.default.createElement(
 	          'div',
-	          { key: monthKey, className: 'react-datepicker__month-container' },
+	          { key: monthKey, ref: function ref(div) {
+	              _this.monthContainer = div;
+	            }, className: 'react-datepicker__month-container' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'react-datepicker__header' },
@@ -39506,7 +39516,7 @@
 	      if (_this.props.showTimeSelect) {
 	        return _react2.default.createElement(_time2.default, {
 	          selected: _this.props.selected,
-	          onTimeChange: _this.props.onTimeChange,
+	          onChange: _this.props.onTimeChange,
 	          intervals: _this.props.timeIntervals,
 	          minTime: _this.props.minTime,
 	          maxTime: _this.props.maxTime,
@@ -39514,7 +39524,8 @@
 	          todayButton: _this.props.todayButton,
 	          showMonthDropdown: _this.props.showMonthDropdown,
 	          showYearDropdown: _this.props.showYearDropdown,
-	          withPortal: _this.props.withPortal });
+	          withPortal: _this.props.withPortal,
+	          monthRef: _this.state.monthContainer });
 	      } else {
 	        return;
 	      }
@@ -39522,12 +39533,25 @@
 
 	    _this.state = {
 	      date: _this.localizeMoment(_this.getDateInView()),
-	      selectingDate: null
+	      selectingDate: null,
+	      monthContainer: _this.monthContainer
 	    };
 	    return _this;
 	  }
 
 	  _createClass(Calendar, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      /* monthContainer height is needed in time component to determine the height for the ul in the time component. setState here so height is given after final component layout is rendered */
+	      if (this.props.showTimeSelect) {
+	        this.assignMonthContainer = function () {
+	          _this2.setState({ monthContainer: _this2.monthContainer });
+	        }();
+	      }
+	    }
+	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (nextProps.preSelection && !(0, _date_utils.isSameDay)(nextProps.preSelection, this.props.preSelection)) {
@@ -39583,6 +39607,7 @@
 	  forceShowMonthNavigation: _propTypes2.default.bool,
 	  onDropdownFocus: _propTypes2.default.func,
 	  onSelect: _propTypes2.default.func.isRequired,
+	  onWeekSelect: _propTypes2.default.func,
 	  showTimeSelect: _propTypes2.default.bool,
 	  timeIntervals: _propTypes2.default.number,
 	  onTimeChange: _propTypes2.default.func,
@@ -39601,8 +39626,11 @@
 	  showYearDropdown: _propTypes2.default.bool,
 	  startDate: _propTypes2.default.object,
 	  todayButton: _propTypes2.default.string,
+	  useWeekdaysShort: _propTypes2.default.bool,
 	  withPortal: _propTypes2.default.bool,
-	  utcOffset: _propTypes2.default.number
+	  utcOffset: _propTypes2.default.number,
+	  weekLabel: _propTypes2.default.string,
+	  yearDropdownItemNumber: _propTypes2.default.number
 	};
 	exports.default = Calendar;
 
@@ -55518,6 +55546,7 @@
 	        year: _this.props.year,
 	        onChange: _this.onChange,
 	        onCancel: _this.toggleDropdown,
+	        maxDate: _this.props.maxDate,
 	        scrollableYearDropdown: _this.props.scrollableYearDropdown,
 	        yearDropdownItemNumber: _this.props.yearDropdownItemNumber });
 	    }, _this.renderScrollMode = function () {
@@ -55708,11 +55737,25 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	function generateYears(year, noOfYear) {
+	function generateYears(year, noOfYear, maximumYear) {
 	  var list = [];
-	  for (var i = 0; i < 2 * noOfYear + 1; i++) {
-	    list.push(year + noOfYear - i);
+	  //If maxDate is defined then that is upperlimit for date
+	  if (maximumYear) {
+	    if (maximumYear - year > noOfYear) {
+	      for (var i = 0; i < 2 * noOfYear + 1; i++) {
+	        list.push(year + noOfYear - i);
+	      }
+	    } else {
+	      for (var i = 0; i < 2 * noOfYear + 1; i++) {
+	        list.push(maximumYear - i);
+	      }
+	    }
+	  } else {
+	    for (var i = 0; i < 2 * noOfYear + 1; i++) {
+	      list.push(year + noOfYear - i);
+	    }
 	  }
+
 	  return list;
 	}
 
@@ -55780,6 +55823,9 @@
 	    };
 
 	    _this.incrementYears = function () {
+	      //Check for maxDate
+	      if (_this.props.maxDate.year() <= _this.state.yearsList[0]) return;
+
 	      return _this.shiftYears(1);
 	    };
 
@@ -55793,7 +55839,7 @@
 	    var noOfYear = yearDropdownItemNumber || (scrollableYearDropdown ? 10 : 5);
 
 	    _this.state = {
-	      yearsList: generateYears(_this.props.year, noOfYear)
+	      yearsList: generateYears(_this.props.year, noOfYear, _this.props.maxDate.year())
 	    };
 	    return _this;
 	  }
@@ -55819,6 +55865,7 @@
 
 	YearDropdownOptions.propTypes = {
 	  onCancel: _propTypes2.default.func.isRequired,
+	  maxDate: _propTypes2.default.object,
 	  onChange: _propTypes2.default.func.isRequired,
 	  scrollableYearDropdown: _propTypes2.default.bool,
 	  year: _propTypes2.default.number.isRequired,
@@ -55886,12 +55933,8 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
+	exports.__esModule = true;
+	exports.IGNORE_CLASS_NAME = undefined;
 	exports.default = onClickOutsideHOC;
 
 	var _react = __webpack_require__(2);
@@ -55916,6 +55959,9 @@
 	var registeredComponents = [];
 	var handlers = [];
 
+	var touchEvents = ['touchstart', 'touchmove'];
+	var IGNORE_CLASS_NAME = exports.IGNORE_CLASS_NAME = 'ignore-react-onclickoutside';
+
 	/**
 	 * This function generates the HOC function that you'll use
 	 * in order to impart onOutsideClick listening to an
@@ -55930,8 +55976,6 @@
 	    _inherits(onClickOutside, _Component);
 
 	    function onClickOutside() {
-	      var _ref;
-
 	      var _temp, _this, _ret;
 
 	      _classCallCheck(this, onClickOutside);
@@ -55940,15 +55984,22 @@
 	        args[_key] = arguments[_key];
 	      }
 
-	      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = onClickOutside.__proto__ || Object.getPrototypeOf(onClickOutside)).call.apply(_ref, [this].concat(args))), _this), _this.__outsideClickHandler = null, _this.enableOnClickOutside = function () {
+	      return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.__outsideClickHandler = null, _this.enableOnClickOutside = function () {
 	        var fn = _this.__outsideClickHandler;
 	        if (fn && typeof document !== 'undefined') {
 	          var events = _this.props.eventTypes;
 	          if (!events.forEach) {
 	            events = [events];
 	          }
+
 	          events.forEach(function (eventName) {
-	            var handlerOptions = !_this.props.preventDefault && ['touchstart', 'touchmove'].indexOf(eventName) !== -1 ? { passive: true } : null;
+	            var handlerOptions = null;
+	            var isTouchEvent = touchEvents.indexOf(eventName) !== -1;
+
+	            if (isTouchEvent) {
+	              handlerOptions = { passive: !_this.props.preventDefault };
+	            }
+
 	            document.addEventListener(eventName, fn, handlerOptions);
 	          });
 	        }
@@ -55968,182 +56019,166 @@
 	      }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 
-	    _createClass(onClickOutside, [{
-	      key: 'getInstance',
+	    /**
+	     * Access the WrappedComponent's instance.
+	     */
+	    onClickOutside.prototype.getInstance = function getInstance() {
+	      if (!WrappedComponent.prototype.isReactComponent) {
+	        return this;
+	      }
+	      var ref = this.instanceRef;
+	      return ref.getInstance ? ref.getInstance() : ref;
+	    };
+
+	    // this is given meaning in componentDidMount/componentDidUpdate
 
 
-	      /**
-	       * Access the WrappedComponent's instance.
-	       */
-	      value: function getInstance() {
-	        if (!WrappedComponent.prototype.isReactComponent) {
-	          return this;
-	        }
-	        var ref = this.instanceRef;
-	        return ref.getInstance ? ref.getInstance() : ref;
+	    /**
+	     * Add click listeners to the current document,
+	     * linked to this component's state.
+	     */
+	    onClickOutside.prototype.componentDidMount = function componentDidMount() {
+	      // If we are in an environment without a DOM such
+	      // as shallow rendering or snapshots then we exit
+	      // early to prevent any unhandled errors being thrown.
+	      if (typeof document === 'undefined' || !document.createElement) {
+	        return;
 	      }
 
-	      // this is given meaning in componentDidMount/componentDidUpdate
+	      var instance = this.getInstance();
 
-	    }, {
-	      key: 'componentDidMount',
-
-
-	      /**
-	       * Add click listeners to the current document,
-	       * linked to this component's state.
-	       */
-	      value: function componentDidMount() {
-	        // If we are in an environment without a DOM such
-	        // as shallow rendering or snapshots then we exit
-	        // early to prevent any unhandled errors being thrown.
-	        if (typeof document === 'undefined' || !document.createElement) {
-	          return;
+	      if (config && typeof config.handleClickOutside === 'function') {
+	        this.__clickOutsideHandlerProp = config.handleClickOutside(instance);
+	        if (typeof this.__clickOutsideHandlerProp !== 'function') {
+	          throw new Error('WrappedComponent lacks a function for processing outside click events specified by the handleClickOutside config option.');
 	        }
-
-	        var instance = this.getInstance();
-
-	        if (config && typeof config.handleClickOutside === 'function') {
-	          this.__clickOutsideHandlerProp = config.handleClickOutside(instance);
-	          if (typeof this.__clickOutsideHandlerProp !== 'function') {
-	            throw new Error('WrappedComponent lacks a function for processing outside click events specified by the handleClickOutside config option.');
-	          }
-	        } else if (typeof instance.handleClickOutside === 'function') {
-	          if (_react.Component.prototype.isPrototypeOf(instance)) {
-	            this.__clickOutsideHandlerProp = instance.handleClickOutside.bind(instance);
-	          } else {
-	            this.__clickOutsideHandlerProp = instance.handleClickOutside;
-	          }
-	        } else if (typeof instance.props.handleClickOutside === 'function') {
-	          this.__clickOutsideHandlerProp = instance.props.handleClickOutside;
+	      } else if (typeof instance.handleClickOutside === 'function') {
+	        if (_react.Component.prototype.isPrototypeOf(instance)) {
+	          this.__clickOutsideHandlerProp = instance.handleClickOutside.bind(instance);
 	        } else {
-	          throw new Error('WrappedComponent lacks a handleClickOutside(event) function for processing outside click events.');
+	          this.__clickOutsideHandlerProp = instance.handleClickOutside;
 	        }
-
-	        // TODO: try to get rid of this, could be done with function ref, might be problematic for SFC though, they do not expose refs
-	        if ((0, _reactDom.findDOMNode)(instance) === null) {
-	          return;
-	        }
-
-	        this.addOutsideClickHandler();
+	      } else if (typeof instance.props.handleClickOutside === 'function') {
+	        this.__clickOutsideHandlerProp = instance.props.handleClickOutside;
+	      } else {
+	        throw new Error('WrappedComponent lacks a handleClickOutside(event) function for processing outside click events.');
 	      }
 
-	      /**
-	      * Track for disableOnClickOutside props changes and enable/disable click outside
-	      */
-
-	    }, {
-	      key: 'componentWillReceiveProps',
-	      value: function componentWillReceiveProps(nextProps) {
-	        if (this.props.disableOnClickOutside && !nextProps.disableOnClickOutside) {
-	          this.enableOnClickOutside();
-	        } else if (!this.props.disableOnClickOutside && nextProps.disableOnClickOutside) {
-	          this.disableOnClickOutside();
-	        }
-	      }
-	    }, {
-	      key: 'componentDidUpdate',
-	      value: function componentDidUpdate() {
-	        var componentNode = (0, _reactDom.findDOMNode)(this.getInstance());
-
-	        if (componentNode === null && this.__outsideClickHandler) {
-	          this.removeOutsideClickHandler();
-	          return;
-	        }
-
-	        if (componentNode !== null && !this.__outsideClickHandler) {
-	          this.addOutsideClickHandler();
-	          return;
-	        }
+	      // TODO: try to get rid of this, could be done with function ref, might be problematic for SFC though, they do not expose refs
+	      if ((0, _reactDom.findDOMNode)(instance) === null) {
+	        return;
 	      }
 
-	      /**
-	       * Remove all document's event listeners for this component
-	       */
+	      this.addOutsideClickHandler();
+	    };
 
-	    }, {
-	      key: 'componentWillUnmount',
-	      value: function componentWillUnmount() {
-	        this.removeOutsideClickHandler();
-	      }
-
-	      /**
-	       * Can be called to explicitly enable event listening
-	       * for clicks and touches outside of this element.
-	       */
+	    /**
+	    * Track for disableOnClickOutside props changes and enable/disable click outside
+	    */
 
 
-	      /**
-	       * Can be called to explicitly disable event listening
-	       * for clicks and touches outside of this element.
-	       */
-
-	    }, {
-	      key: 'addOutsideClickHandler',
-	      value: function addOutsideClickHandler() {
-	        var fn = this.__outsideClickHandler = (0, _generateOutsideCheck2.default)((0, _reactDom.findDOMNode)(this.getInstance()), this.__clickOutsideHandlerProp, this.props.outsideClickIgnoreClass, this.props.excludeScrollbar, this.props.preventDefault, this.props.stopPropagation);
-
-	        var pos = registeredComponents.length;
-	        registeredComponents.push(this);
-	        handlers[pos] = fn;
-
-	        // If there is a truthy disableOnClickOutside property for this
-	        // component, don't immediately start listening for outside events.
-	        if (!this.props.disableOnClickOutside) {
-	          this.enableOnClickOutside();
-	        }
-	      }
-	    }, {
-	      key: 'removeOutsideClickHandler',
-	      value: function removeOutsideClickHandler() {
+	    onClickOutside.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	      if (this.props.disableOnClickOutside && !nextProps.disableOnClickOutside) {
+	        this.enableOnClickOutside();
+	      } else if (!this.props.disableOnClickOutside && nextProps.disableOnClickOutside) {
 	        this.disableOnClickOutside();
-	        this.__outsideClickHandler = false;
-
-	        var pos = registeredComponents.indexOf(this);
-
-	        if (pos > -1) {
-	          // clean up so we don't leak memory
-	          if (handlers[pos]) {
-	            handlers.splice(pos, 1);
-	          }
-	          registeredComponents.splice(pos, 1);
-	        }
 	      }
-	    }, {
-	      key: 'render',
+	    };
 
+	    onClickOutside.prototype.componentDidUpdate = function componentDidUpdate() {
+	      var componentNode = (0, _reactDom.findDOMNode)(this.getInstance());
 
-	      /**
-	       * Pass-through render
-	       */
-	      value: function render() {
-	        var _this2 = this;
-
-	        var props = Object.keys(this.props).filter(function (prop) {
-	          return prop !== 'excludeScrollbar';
-	        }).reduce(function (props, prop) {
-	          props[prop] = _this2.props[prop];
-	          return props;
-	        }, {});
-
-	        if (WrappedComponent.prototype.isReactComponent) {
-	          props.ref = this.getRef;
-	        } else {
-	          props.wrappedRef = this.getRef;
-	        }
-
-	        props.disableOnClickOutside = this.disableOnClickOutside;
-	        props.enableOnClickOutside = this.enableOnClickOutside;
-
-	        return (0, _react.createElement)(WrappedComponent, props);
+	      if (componentNode === null && this.__outsideClickHandler) {
+	        this.removeOutsideClickHandler();
+	        return;
 	      }
-	    }]);
+
+	      if (componentNode !== null && !this.__outsideClickHandler) {
+	        this.addOutsideClickHandler();
+	        return;
+	      }
+	    };
+
+	    /**
+	     * Remove all document's event listeners for this component
+	     */
+
+
+	    onClickOutside.prototype.componentWillUnmount = function componentWillUnmount() {
+	      this.removeOutsideClickHandler();
+	    };
+
+	    /**
+	     * Can be called to explicitly enable event listening
+	     * for clicks and touches outside of this element.
+	     */
+
+
+	    /**
+	     * Can be called to explicitly disable event listening
+	     * for clicks and touches outside of this element.
+	     */
+
+
+	    onClickOutside.prototype.addOutsideClickHandler = function addOutsideClickHandler() {
+	      var fn = this.__outsideClickHandler = (0, _generateOutsideCheck2.default)((0, _reactDom.findDOMNode)(this.getInstance()), this.__clickOutsideHandlerProp, this.props.outsideClickIgnoreClass, this.props.excludeScrollbar, this.props.preventDefault, this.props.stopPropagation);
+
+	      var pos = registeredComponents.length;
+	      registeredComponents.push(this);
+	      handlers[pos] = fn;
+
+	      // If there is a truthy disableOnClickOutside property for this
+	      // component, don't immediately start listening for outside events.
+	      if (!this.props.disableOnClickOutside) {
+	        this.enableOnClickOutside();
+	      }
+	    };
+
+	    onClickOutside.prototype.removeOutsideClickHandler = function removeOutsideClickHandler() {
+	      this.disableOnClickOutside();
+	      this.__outsideClickHandler = false;
+
+	      var pos = registeredComponents.indexOf(this);
+
+	      if (pos > -1) {
+	        // clean up so we don't leak memory
+	        if (handlers[pos]) {
+	          handlers.splice(pos, 1);
+	        }
+	        registeredComponents.splice(pos, 1);
+	      }
+	    };
+
+	    /**
+	     * Pass-through render
+	     */
+	    onClickOutside.prototype.render = function render() {
+	      var _this2 = this;
+
+	      var props = Object.keys(this.props).filter(function (prop) {
+	        return prop !== 'excludeScrollbar';
+	      }).reduce(function (props, prop) {
+	        props[prop] = _this2.props[prop];
+	        return props;
+	      }, {});
+
+	      if (WrappedComponent.prototype.isReactComponent) {
+	        props.ref = this.getRef;
+	      } else {
+	        props.wrappedRef = this.getRef;
+	      }
+
+	      props.disableOnClickOutside = this.disableOnClickOutside;
+	      props.enableOnClickOutside = this.enableOnClickOutside;
+
+	      return (0, _react.createElement)(WrappedComponent, props);
+	    };
 
 	    return onClickOutside;
 	  }(_react.Component), _class.displayName = 'OnClickOutside(' + (WrappedComponent.displayName || WrappedComponent.name || 'Component') + ')', _class.defaultProps = {
 	    eventTypes: ['mousedown', 'touchstart'],
 	    excludeScrollbar: config && config.excludeScrollbar || false,
-	    outsideClickIgnoreClass: 'ignore-react-onclickoutside',
+	    outsideClickIgnoreClass: IGNORE_CLASS_NAME,
 	    preventDefault: false,
 	    stopPropagation: false
 	  }, _class.getClass = function () {
@@ -56157,9 +56192,7 @@
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	exports.__esModule = true;
 	exports.default = generateOutsideCheck;
 	/**
 	 * Check whether some DOM node is our Component's node.
@@ -57352,21 +57385,7 @@
 	        return;
 	      }
 
-	      _this.props.onTimeChange(time);
-	    }, _this.ulClasses = function () {
-	      var classes = ['react-datepicker__time-list'];
-
-	      if (_this.props.showYearDropdown || _this.props.showMonthDropdown) {
-	        classes.push('react-datepicker__time-list--with-dropdowns');
-	      }
-	      if (_this.props.todayButton) {
-	        classes.push('react-datepicker__time-list--with-today-button');
-	      }
-	      if (_this.props.withPortal) {
-	        classes.push('react-datepicker__time-list--with-portal');
-	      }
-
-	      return classes.join(' ');
+	      _this.props.onChange(time);
 	    }, _this.liClasses = function (time, currH, currM) {
 	      var classes = ['react-datepicker__time-list-item'];
 
@@ -57404,14 +57423,20 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      // code to ensure selected time will always be in focus within time window when it first appears
-	      var node = this.refs.timeList;
 	      var multiplier = 60 / this.props.intervals;
 	      var currH = this.props.selected ? this.props.selected.get('hours') : (0, _moment2.default)().get('hours');
-	      node.scrollTop = 30 * (multiplier * currH);
+	      this.list.scrollTop = 30 * (multiplier * currH);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
+	      var height = null;
+	      if (this.props.monthRef) {
+	        height = this.props.monthRef.clientHeight - 39;
+	      }
+
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'react-datepicker__time-container ' + (this.props.todayButton ? 'react-datepicker__time-container--with-today-button' : '') },
@@ -57432,7 +57457,9 @@
 	            { className: 'react-datepicker__time-box' },
 	            _react2.default.createElement(
 	              'ul',
-	              { className: this.ulClasses(), ref: 'timeList' },
+	              { className: 'react-datepicker__time-list', ref: function ref(list) {
+	                  _this2.list = list;
+	                }, style: height ? { height: height } : {} },
 	              this.renderTimes.bind(this)()
 	            )
 	          )
@@ -57456,14 +57483,12 @@
 	Time.propTypes = {
 	  intervals: _propTypes2.default.number,
 	  selected: _propTypes2.default.object,
-	  onTimeChange: _propTypes2.default.func,
+	  onChange: _propTypes2.default.func,
 	  todayButton: _propTypes2.default.string,
-	  showMonthDropdown: _propTypes2.default.bool,
-	  showYearDropdown: _propTypes2.default.bool,
-	  withPortal: _propTypes2.default.bool,
 	  minTime: _propTypes2.default.object,
 	  maxTime: _propTypes2.default.object,
-	  excludeTimes: _propTypes2.default.array
+	  excludeTimes: _propTypes2.default.array,
+	  monthRef: _propTypes2.default.object
 	};
 	exports.default = Time;
 
@@ -58026,7 +58051,7 @@
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**!
 	 * @fileOverview Kickass library to create and place poppers near their reference elements.
-	 * @version 1.12.3
+	 * @version 1.12.5
 	 * @license
 	 * Copyright (c) 2016 Federico Zivolo and contributors
 	 *
@@ -62837,6 +62862,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _moment = __webpack_require__(354);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
@@ -62910,8 +62939,8 @@
 	            dateFormat: 'DD-MMM YYYY HH:mm',
 	            todayButton: todayTxt,
 	            selected: selected,
-	            minDate: moment('2016-11-05T00:00:00+00:00').utcOffset(this.state.utcOffset),
-	            maxDate: moment('2016-12-04T00:00:00-04:00').utcOffset(this.state.utcOffset),
+	            minDate: (0, _moment2.default)('2016-11-05T00:00:00+00:00').utcOffset(this.state.utcOffset),
+	            maxDate: (0, _moment2.default)('2016-12-04T00:00:00-04:00').utcOffset(this.state.utcOffset),
 	            onChange: this.handleChange }),
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
@@ -64045,7 +64074,7 @@
 	            _react2.default.createElement(
 	              'strong',
 	              null,
-	              '    showTimeSelect\n    timeIntervals={15}\n/>\n'
+	              '    showTimeSelect\n    timeIntervals={15}\n    dateFormat="LLL"\n/>\n'
 	            )
 	          )
 	        ),
@@ -64056,7 +64085,8 @@
 	            selected: this.state.startDate,
 	            onChange: this.handleChange,
 	            showTimeSelect: true,
-	            timeIntervals: 15 })
+	            timeIntervals: 15,
+	            dateFormat: 'LLL' })
 	        )
 	      );
 	    }
@@ -64148,6 +64178,12 @@
 	              '  excludeTimes={[moment().hours(17).minutes(0), moment().hours(18).minutes(30), moment().hours(19).minutes(30)], moment().hours(17).minutes(30)}'
 	            ),
 	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              '  dateFormat="LLL"'
+	            ),
+	            _react2.default.createElement('br', null),
 	            '/>'
 	          )
 	        ),
@@ -64158,7 +64194,8 @@
 	            selected: this.state.startDate,
 	            onChange: this.handleChange,
 	            showTimeSelect: true,
-	            excludeTimes: [(0, _moment2.default)().hours(17).minutes(0), (0, _moment2.default)().hours(18).minutes(30), (0, _moment2.default)().hours(19).minutes(30), (0, _moment2.default)().hours(17).minutes(30)] })
+	            excludeTimes: [(0, _moment2.default)().hours(17).minutes(0), (0, _moment2.default)().hours(18).minutes(30), (0, _moment2.default)().hours(19).minutes(30), (0, _moment2.default)().hours(17).minutes(30)],
+	            dateFormat: 'LLL' })
 	        )
 	      );
 	    }
@@ -64249,7 +64286,9 @@
 	              _react2.default.createElement('br', null),
 	              '  minTime={moment().hours(17).minutes(0)}',
 	              _react2.default.createElement('br', null),
-	              '  maxTime={moment().hours(20).minutes(30)}'
+	              '  maxTime={moment().hours(20).minutes(30)}',
+	              _react2.default.createElement('br', null),
+	              '  dateFormat="LLL"'
 	            ),
 	            _react2.default.createElement('br', null),
 	            '/>'
@@ -64263,7 +64302,8 @@
 	            onChange: this.handleChange,
 	            showTimeSelect: true,
 	            minTime: (0, _moment2.default)().hours(17).minutes(0),
-	            maxTime: (0, _moment2.default)().hours(20).minutes(30) })
+	            maxTime: (0, _moment2.default)().hours(20).minutes(30),
+	            dateFormat: 'LLL' })
 	        )
 	      );
 	    }
@@ -64276,14 +64316,98 @@
 
 /***/ }),
 /* 535 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(352);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(354);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DontCloseOnSelect = function (_React$Component) {
+	  _inherits(DontCloseOnSelect, _React$Component);
+
+	  function DontCloseOnSelect(props) {
+	    _classCallCheck(this, DontCloseOnSelect);
+
+	    var _this = _possibleConstructorReturn(this, (DontCloseOnSelect.__proto__ || Object.getPrototypeOf(DontCloseOnSelect)).call(this, props));
+
+	    _this.handleChange = function (date) {
+	      _this.setState({
+	        startDate: date
+	      });
+	    };
+
+	    _this.state = {
+	      startDate: (0, _moment2.default)()
+	    };
+	    return _this;
+	  }
+
+	  _createClass(DontCloseOnSelect, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'pre',
+	          { className: 'column example__code' },
+	          _react2.default.createElement(
+	            'code',
+	            { className: 'jsx' },
+	            '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    shouldCloseOnSelect={false}\n/>\n'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'column' },
+	          _react2.default.createElement(_reactDatepicker2.default, {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange,
+	            shouldCloseOnSelect: false })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return DontCloseOnSelect;
+	}(_react2.default.Component);
+
+	exports.default = DontCloseOnSelect;
+
+/***/ }),
+/* 536 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 536 */
-535,
 /* 537 */
+536,
+/* 538 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64350,7 +64474,7 @@
 	exports.default = HeroExample;
 
 /***/ }),
-/* 538 */
+/* 539 */
 /***/ (function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/**
